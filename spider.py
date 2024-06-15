@@ -24,7 +24,8 @@ def date_convert(date: str) -> str:
     # 输入格式： '06-13 10:40'
     # 输出格式： '2017-03-30 09:29'
     global cur_month, cur_year
-    dt = datetime.strptime(date, input_dateformat)
+    date = "2024-" + date # 防闰年
+    dt = datetime.strptime(date, output_dateformat)
     if dt.month == 12 and cur_month == 1:
         cur_year -= 1 # 这意味着我们已经跨越了一年
     cur_month = dt.month
@@ -94,7 +95,7 @@ def get_news(start_page, end_date):
         '''
 
         ls = []
-        for i in range(80):
+        for i in range(len(renew_list)):
             ls.append([date_convert(renew_list[i].text.strip()), title_list[i].text.strip(), author_list[i].text.strip()])
 
         print(ls)
@@ -116,8 +117,6 @@ def get_news(start_page, end_date):
             return
         sleep(1)
         page_idx += 1
-    # outwb.save("资讯mt9.xlsx")
-    # outputData.to_excel(outputExcelFilePath, engine='xlsxwriter')
 
 
 if __name__ == "__main__":
